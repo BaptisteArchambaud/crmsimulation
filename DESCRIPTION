@@ -1,0 +1,20 @@
+Package: crmsimulation
+Title: Simulating Continual Reassessment Method (CRM) scenarios
+Version: 0.0.0.9000
+Authors@R: 
+    person("Baptiste", "Archambaud", , "archambaudbaptiste@gmail.com", role = c("aut", "cre"))
+Description: This application dipslays posterior estimates of a given Continual Reassessment Method (CRM) model, depending on patient toxicities.
+License: What license is it under?
+Imports: 
+    config,
+    dplyr,
+    escalation,
+    ggplot2,
+    golem,
+    magrittr,
+    purrr,
+    shiny,
+    tibble
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
