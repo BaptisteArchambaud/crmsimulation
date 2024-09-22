@@ -59,7 +59,7 @@ app_server <- function(input, output, session) {
       crm_run_ok(TRUE)
       data(tibble(subjid = character(), dose_level = character(), tox = character()))
       crm_model_fit(
-        get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1)) %>%
+        get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1.34)) %>%
           fit(tox_df_to_vector(data(), "dose_level", "tox"))
       )
       next_dose(input$start_dose)
@@ -74,7 +74,7 @@ app_server <- function(input, output, session) {
     req(crm_run_ok())
     data(data() %>% bind_rows(tibble(subjid = paste0("#", nrow(data()) + 1), dose_level = as.character(next_dose()), tox = "1")))
     crm_model_fit(
-      get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1)) %>%
+      get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1.34)) %>%
         fit(tox_df_to_vector(data(), "dose_level", "tox"))
     )
     next_dose(crm_model_fit() %>% recommended_dose())
@@ -86,7 +86,7 @@ app_server <- function(input, output, session) {
     req(crm_run_ok())
     data(data() %>% bind_rows(tibble(subjid = paste0("#", nrow(data()) + 1), dose_level = as.character(next_dose()), tox = "0")))
     crm_model_fit(
-      get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1)) %>%
+      get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1.34)) %>%
         fit(tox_df_to_vector(data(), "dose_level", "tox"))
     )
     next_dose(crm_model_fit() %>% recommended_dose())
