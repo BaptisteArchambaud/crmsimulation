@@ -1,11 +1,3 @@
----
-output: 
-  github_document:
-    html_preview: false
----
-
-
-
 This project is a **RShiny** application developed using the **golem** framework to simulate the evolution of toxicity probability estimates in a dose-finding clinical trial. The app allows users to simulate a clinical trial based on the **Continual Reassessment Method (CRM)**, using the `escalation` R package.
 
 
