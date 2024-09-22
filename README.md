@@ -17,4 +17,4 @@ crmsimulation::run_app()
 <img src="man/images/app_example.png" alt="app_example">
 </p>
 
-CRM model is run with get_dfcrm function from `escalation` R package, using empiric model and normal prior on $\beta with standard deviation of sqrt(1.34).
+CRM model is run with get_dfcrm function from `escalation` R package, using empiric model and normal prior on $\beta$ with standard deviation of sqrt(1.34).
