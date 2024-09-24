@@ -1,47 +1,31 @@
 #' Graph of prior and posterior toxicity probabilities
 #'
 #' @param modelfit
-#' @param dose_level
-#' @param tox_probas
-#' @param skeleton
 #' @param target
 #'
 #' @return
 #'
 #' @examples
-#' @importFrom dplyr bind_rows filter mutate
+#' @importFrom dplyr bind_rows
 #' @importFrom ggplot2 aes geom_hline geom_line geom_point ggplot labs scale_color_manual scale_y_continuous theme_light
-#' @importFrom rlang sym
-ggplot_tox_probas <- function(modelfit,
-                              dose_level = "dose",
-                              tox_probas = "mean_prob_tox",
-                              skeleton = "Skeleton",
-                              target = 0.25){
-
-  dose_level = sym(dose_level)
-  tox_probas = sym(tox_probas)
-  skeleton = sym(skeleton)
-
-  data_plot <- summary(modelfit) %>%
-    filter(!!dose_level != "NoDose") %>%
-    mutate(!!dose_level := as.numeric(paste0(!!dose_level)))
+ggplot_tox_probas <- function(modelfit, target = 0.25){
 
   #skeleton probabilities
-  data_plot <- data_plot %>%
-    mutate(all_tox_probas = !!skeleton,
-           proba_id = "Skeleton")
+  data_plot <- tibble(dose_level = 1:length(modelfit$skeleton),
+                      all_tox_probas = modelfit$skeleton,
+                      proba_id = "Skeleton")
 
   #if at least 1 patient included then also add posterior probabilities
   if(nrow(modelfit$df) > 0){
     data_plot <- data_plot %>%
       bind_rows(
-        data_plot %>%
-          mutate(all_tox_probas = !!tox_probas,
-                 proba_id = "Posterior probabilities")
+        tibble(dose_level = 1:length(modelfit$skeleton),
+               all_tox_probas = modelfit$dfcrm_fit$ptox,
+               proba_id = "Posterior probabilities")
       )
   }
 
-  data_plot %>% ggplot(aes(x = !!dose_level, y = all_tox_probas, color = proba_id)) +
+  data_plot %>% ggplot(aes(x = dose_level, y = all_tox_probas, color = proba_id)) +
     scale_color_manual(values = c("Skeleton" = "#F8766D", "Posterior probabilities" = "#619CFF")) +
     geom_point() +
     geom_line() +
