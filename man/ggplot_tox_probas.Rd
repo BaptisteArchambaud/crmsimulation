@@ -4,13 +4,7 @@
 \alias{ggplot_tox_probas}
 \title{Graph of prior and posterior toxicity probabilities}
 \usage{
-ggplot_tox_probas(
-  modelfit,
-  dose_level = "dose",
-  tox_probas = "mean_prob_tox",
-  skeleton = "Skeleton",
-  target = 0.25
-)
+ggplot_tox_probas(modelfit, target = 0.25, CI = F)
 }
 \arguments{
 \item{target}{}
