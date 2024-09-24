@@ -28,7 +28,7 @@ ggplot_tox_probas <- function(modelfit, target = 0.25, CI = F){
                upper_probas = modelfit$dfcrm_fit$ptoxU,
                proba_id = "Posterior probabilities")
       )
-  }
+    }
 
   plot <- data_plot %>% ggplot(aes(x = dose_level, y = all_tox_probas, color = proba_id)) +
     scale_color_manual(values = c("Skeleton" = "#F8766D", "Posterior probabilities" = "#619CFF")) +
@@ -39,16 +39,18 @@ ggplot_tox_probas <- function(modelfit, target = 0.25, CI = F){
     scale_y_continuous(breaks = seq(0, 1, 0.25), limits = c(0, 1)) +
     theme_light()
 
+  #credible intervals
   if(CI){
     plot <- plot +
-      geom_ribbon(aes(ymin = lower_probas, ymax = upper_probas, fill = proba_id),
-                  alpha = 0.3, show.legend = F, colour = NA) +
-      scale_fill_manual(values = c("Skeleton" = "#F8766D", "Posterior probabilities" = "#619CFF"))
-  }
+      scale_fill_manual(values = c("Posterior probabilities" = "#619CFF"),
+                        labels = c("Posterior probabilities" = "90% credible intervals")) +
+      geom_ribbon(aes(ymin = lower_probas, ymax = upper_probas, fill = proba_id), alpha = 0.3, colour = NA) +
+      labs(fill = "")
+    }
 
   plot
 
-}
+  }
 
 
 
@@ -71,4 +73,4 @@ tox_df_to_vector <- function(data, dose_level, tox_probas){
     collapse = " "
     )
   return(leveltox)
-}
+  }

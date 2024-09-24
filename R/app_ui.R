@@ -30,7 +30,7 @@ app_ui <- function(request) {
         ),
         mainPanel(
           span(textOutput("error_message"), style = " font-weight: bold; color: red;"),
-          plotOutput("plot"),
+          plotOutput("plot", click = "plot_click"),
           tableOutput("data"),
           textOutput("recommended_dose")
         )

@@ -34,6 +34,8 @@ app_server <- function(input, output, session) {
   next_dose <- reactiveVal()
   #target toxicity rate
   target <- reactiveVal()
+  #plot credible intervals
+  CI <- reactiveVal(F)
   #boolean to control inputs before running CRM and simulating data
   crm_run_ok <- reactiveVal(FALSE)
 
@@ -60,7 +62,7 @@ app_server <- function(input, output, session) {
       data(tibble(subjid = character(), dose_level = character(), tox = character()))
       crm_model_fit(
         get_dfcrm(skeleton = skeleton(), target = target(), model = "empiric", method = "bayes", scale = sqrt(1.34)) %>%
-          fit(tox_df_to_vector(data(), "dose_level", "tox"))
+          fit("")
       )
       next_dose(input$start_dose)
       output$recommended_dose <- renderText(paste0("First patient will receive dose level ", next_dose()))
@@ -80,7 +82,7 @@ app_server <- function(input, output, session) {
     next_dose(crm_model_fit() %>% recommended_dose())
     output$data <- renderTable(data())
     output$recommended_dose <- renderText(paste0("Recommended dose for next patient is dose level ", next_dose()))
-    output$plot <- renderPlot(ggplot_tox_probas(modelfit = crm_model_fit(), target = target()))
+    output$plot <- renderPlot(ggplot_tox_probas(modelfit = crm_model_fit(), target = target(), CI = CI()))
   })
   observeEvent(input$notox_button, {
     req(crm_run_ok())
@@ -92,7 +94,10 @@ app_server <- function(input, output, session) {
     next_dose(crm_model_fit() %>% recommended_dose())
     output$data <- renderTable(data())
     output$recommended_dose <- renderText(paste0("Recommended dose for next patient is dose level ", next_dose()))
-    output$plot <- renderPlot(ggplot_tox_probas(modelfit = crm_model_fit(), target = target()))
+    output$plot <- renderPlot(ggplot_tox_probas(modelfit = crm_model_fit(), target = target(), CI = CI()))
   })
+
+  #plot credible intervals when clicking on the graph
+  observeEvent(input$plot_click, CI(!CI()))
 
 }
