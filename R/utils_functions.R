@@ -2,6 +2,7 @@
 #'
 #' @param modelfit
 #' @param target
+#' @param CI
 #'
 #' @return
 #'

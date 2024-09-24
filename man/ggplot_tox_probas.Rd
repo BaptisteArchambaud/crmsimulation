@@ -7,7 +7,7 @@
 ggplot_tox_probas(modelfit, target = 0.25, CI = F)
 }
 \arguments{
-\item{target}{}
+\item{CI}{}
 }
 \description{
 Graph of prior and posterior toxicity probabilities
