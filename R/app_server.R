@@ -15,7 +15,7 @@ app_server <- function(input, output, session) {
   output$skeleton <- renderUI({
     (1:input$nb_levels) %>% map(
       ~ numericInput(inputId = paste0("skeleton", .x), label = paste("Toxicity probability for dose level", .x),
-                     value = min(.x / 20, 1), min = 0, max = 1)
+                     value = min(.x / 20, 1), step = 0.05, min = 0, max = 1)
     )
   })
 

@@ -15,7 +15,7 @@ app_ui <- function(request) {
         sidebarPanel(
           fluidRow(
             h2("CRM parameters"),
-            numericInput(inputId = "target", "Target toxicity rate", value = 0.25),
+            numericInput(inputId = "target", "Target toxicity rate", value = 0.25, step = 0.05),
             sliderInput(inputId = "nb_levels", label = "Number of dose levels", value = 2, min = 2, max = 12, step = 1, ticks = F),
             selectInput(inputId = "start_dose", label = "Starting dose", c(1,2)),
             h3("Skeleton"),
